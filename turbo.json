@@ -3,7 +3,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", ".open-next/**"],
+      "env": ["NEXT_PUBLIC_SITE_URL"]
     },
     "dev": {
       "cache": false,
@@ -31,7 +32,8 @@
     },
     "e2e": {
       "cache": false,
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "passThroughEnv": ["CI", "PORT", "PLAYWRIGHT_BROWSERS_PATH"]
     }
   }
 }

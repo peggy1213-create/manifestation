@@ -25,6 +25,12 @@ next-env.d.ts
 .dev.vars
 !.dev.vars.example
 
+# playwright
+apps/web/test-results/
+apps/web/playwright-report/
+apps/web/blob-report/
+apps/web/.playwright/
+
 # misc
 .DS_Store
 *.pem

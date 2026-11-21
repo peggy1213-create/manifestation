@@ -1,33 +1,74 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter, Noto_Sans_TC } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getTranslations } from 'next-intl/server';
+import type { ReactNode } from 'react';
+import { SiteFooter } from '@/components/site-footer';
+import { SiteHeader } from '@/components/site-header';
+import { SkipLink } from '@/components/skip-link';
+import { openGraphLocale } from '@/i18n/config';
+import { siteUrl } from '@/lib/metadata';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Self-hosted at build time, so no request ever leaves for a font CDN.
+const notoSansTC = Noto_Sans_TC({
+  variable: '--font-noto-sans-tc',
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: "顯化 Clear Path",
-  description: "科學方法的顯化練習：WOOP、過程導向的顯化板，與 66 天足跡紀錄。",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('site');
+  const name = t('name');
+  const title = `${name} — ${t('tagline')}`;
+  const description = t('description');
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: title,
+      template: `%s · ${name}`,
+    },
+    description,
+    applicationName: name,
+    formatDetection: { telephone: false },
+    openGraph: {
+      type: 'website',
+      locale: openGraphLocale,
+      siteName: name,
+      title,
+      description,
+      url: '/',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
+
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="zh-TW">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang={locale} className={`${notoSansTC.variable} ${inter.variable}`}>
+      <body className="flex min-h-screen flex-col">
+        <NextIntlClientProvider>
+          <SkipLink />
+          <SiteHeader />
+          <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
+            {children}
+          </main>
+          <SiteFooter />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

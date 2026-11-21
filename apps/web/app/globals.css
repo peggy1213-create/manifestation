@@ -1,26 +1,124 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Lab notebook (實驗筆記). Colours, fonts and radii come from
+ * @clearpath/tokens as --cp-* custom properties; this file maps them onto
+ * Tailwind's theme so utilities like `bg-paper-2` or `text-blue-ink` exist.
+ *
+ * `inline` keeps the var() reference in the generated utility, so every
+ * utility follows the light/dark values the token file sets.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--cp-ink);
+  --color-ink-muted: var(--cp-ink-muted);
+  --color-paper: var(--cp-paper);
+  --color-paper-2: var(--cp-paper-2);
+  --color-paper-sunken: var(--cp-paper-sunken);
+  --color-line: var(--cp-line);
+  --color-graph-blue: var(--cp-graph-blue);
+  --color-blue-ink: var(--cp-blue-on-white);
+  --color-highlighter: var(--cp-highlighter);
+  --color-coral: var(--cp-coral);
+
+  /* next/font sets these two on <html>; Inter first, so Latin and numbers use
+     Inter and 繁體中文 falls through to Noto Sans TC. */
+  --font-sans: var(--font-inter), var(--font-noto-sans-tc), 'PingFang TC', 'Microsoft JhengHei',
+    sans-serif;
+
+  --radius-sm: var(--cp-radius-sm);
+  --radius-md: var(--cp-radius-md);
+  --radius-lg: var(--cp-radius-lg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--cp-paper);
+    color: var(--cp-ink);
+    font-size: var(--cp-text-body);
+    font-weight: var(--cp-weight-body);
+    line-height: var(--cp-leading-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--cp-ink);
+    font-weight: var(--cp-weight-heading);
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  /* Visible focus everywhere, per the accessibility rules. */
+  :focus-visible {
+    outline: 2px solid var(--cp-graph-blue);
+    outline-offset: 2px;
+    border-radius: var(--cp-radius-sm);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Faint graph-paper grid. Decorative: keep it behind content, never under text
+     that needs full contrast. */
+  .cp-grid {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--cp-line) 60%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--cp-line) 60%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: var(--cp-grid-size) var(--cp-grid-size);
+  }
+
+  /* Highlighter swipe behind one phrase. Always ink text on top. */
+  .cp-highlight {
+    color: var(--cp-ink);
+    background-image: linear-gradient(
+      to bottom,
+      transparent 58%,
+      var(--cp-highlighter) 58%,
+      var(--cp-highlighter) 94%,
+      transparent 94%
+    );
+    padding-inline: 0.12em;
+  }
+
+  /* Keep the footer clear of the fixed 顯化空間 tab bar, which only exists on
+     those screens and only below md. */
+  body:has([data-tabbar]) footer {
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+  }
+
+  @media (width >= 48rem) {
+    body:has([data-tabbar]) footer {
+      padding-bottom: 0;
+    }
+  }
+
+  /* The margin line down the left of a notebook page. */
+  .cp-margin-rule {
+    border-inline-start: 2px solid color-mix(in srgb, var(--cp-coral) 55%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

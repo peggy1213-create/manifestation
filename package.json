@@ -9,6 +9,7 @@
     "dev": "turbo run dev --filter=web",
     "build": "turbo run build",
     "lint": "turbo run lint",
+    "lint:copy": "node scripts/copy-lint.mjs",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "e2e": "turbo run e2e --filter=web",

@@ -1,0 +1,152 @@
+{
+  "site": {
+    "name": "顯化 Clear Path",
+    "shortName": "顯化",
+    "tagline": "把願望寫成可以練習的路",
+    "description": "顯化 Clear Path 用 WOOP 幫你把願望寫清楚：想要的、實現後的樣子、可能的阻礙，以及「如果…就…」的計畫。做一塊以小行動為主的顯化板，花三分鐘排練，然後在 66 天的路上留下足跡。"
+  },
+  "a11y": {
+    "skipToContent": "跳到主要內容",
+    "currentPage": "目前所在頁面"
+  },
+  "nav": {
+    "primaryLabel": "主要導覽",
+    "home": "首頁",
+    "resources": "資源",
+    "space": "顯化空間",
+    "signIn": "登入",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單",
+    "accountMenu": "帳戶選單",
+    "account": "我的帳戶",
+    "signOut": "登出"
+  },
+  "spaceNav": {
+    "label": "顯化空間導覽",
+    "today": "今天",
+    "manifestations": "我的顯化",
+    "board": "顯化板",
+    "rehearsal": "排練",
+    "footprints": "足跡"
+  },
+  "footer": {
+    "label": "頁尾",
+    "linksLabel": "關於這個網站",
+    "about": "關於",
+    "privacy": "隱私",
+    "contact": "聯絡我們",
+    "disclaimer": "這是自我練習工具，不是心理治療。",
+    "support": "如果你現在很不好受，安心專線 1925 全天候都有人接聽。",
+    "copyright": "© {year} 顯化 Clear Path"
+  },
+  "common": {
+    "comingSoon": "這個部分還在製作中，很快就會出現在這裡。",
+    "backHome": "回首頁"
+  },
+  "pages": {
+    "home": {
+      "metaTitle": "把願望寫成可以練習的路",
+      "metaDescription": "用 WOOP 寫下你的顯化，做一塊以小行動為主的顯化板，花三分鐘排練，在 66 天的路上留下足跡。",
+      "heading": "把願望寫成",
+      "headingHighlight": "可以練習的路",
+      "intro": "顯化不是等著事情發生。它是把願望寫清楚，先看見會卡住的地方，再為那個地方準備一個小行動。",
+      "ctaPrimary": "開始寫第一個顯化",
+      "ctaSecondary": "先看看資源",
+      "stepsHeading": "四個步驟，每天重複",
+      "steps": {
+        "woop": {
+          "title": "寫下顯化",
+          "body": "WOOP 四步：你想要的願望、實現後的樣子、最可能的阻礙，以及「如果…就…」的計畫。"
+        },
+        "board": {
+          "title": "做一塊顯化板",
+          "body": "大部分的版面留給你每天會重複的小行動，而不是結果的照片。"
+        },
+        "rehearsal": {
+          "title": "三分鐘排練",
+          "body": "先看一次實現後的樣子，接著看阻礙，最後唸一次你的「如果…就…」。"
+        },
+        "footprints": {
+          "title": "記下今天",
+          "body": "66 天的路上，每天留一個足跡。今天沒做到的日子是灰色的，不用補，也不用解釋。"
+        }
+      },
+      "evidenceHeading": "我們寫得出來源的部分",
+      "evidenceBody": "WOOP 來自心理學家 Gabriele Oettingen 的心理對比研究；「如果…就…」計畫來自 Peter Gollwitzer 的執行意向研究。我們只放有研究支持的做法，寫不出來源的就不寫。"
+    },
+    "resources": {
+      "metaTitle": "資源",
+      "metaDescription": "顯化練習背後的研究、做法說明，以及我們讀過的資料。",
+      "heading": "資源",
+      "intro": "這裡放顯化練習背後的研究、做法說明，以及我們讀過的資料。"
+    },
+    "login": {
+      "metaTitle": "登入",
+      "metaDescription": "用 Google 登入顯化 Clear Path。",
+      "heading": "登入",
+      "intro": "用 Google 登入就可以開始。我們只會讀取你的 email 和名字，用來建立你的帳戶。",
+      "note": "你寫的內容和照片只存在我們自己的 Cloudflare 帳戶裡，不會傳給任何第三方。"
+    },
+    "about": {
+      "metaTitle": "關於",
+      "metaDescription": "關於顯化 Clear Path：一個以研究為基礎的顯化練習工具。",
+      "heading": "關於",
+      "intro": "顯化 Clear Path 是一個以研究為基礎的顯化練習工具，用繁體中文寫給台灣的使用者。",
+      "body": "我們相信寫清楚願望、認出阻礙、準備好一個小行動，比反覆想像結果更有用。所以每一次想像實現後的樣子，後面一定接著阻礙和「如果…就…」的計畫。"
+    },
+    "privacy": {
+      "metaTitle": "隱私",
+      "metaDescription": "你寫的內容與照片只存在我們自己的 Cloudflare 帳戶，沒有第三方分析或追蹤工具。",
+      "heading": "隱私",
+      "intro": "預設就是私密的。",
+      "body": "你寫的顯化、筆記和放進顯化板的照片，只存在我們自己的 Cloudflare 帳戶裡，不會傳給第三方。網站上沒有第三方分析或追蹤程式；我們看的數字來自我們自己的資料庫。"
+    },
+    "contact": {
+      "metaTitle": "聯絡我們",
+      "metaDescription": "聯絡顯化 Clear Path。",
+      "heading": "聯絡我們",
+      "intro": "有想法、看到寫錯的地方，或是想說說你的練習，都歡迎寫信給我們。",
+      "email": "hello@clearpath.tw"
+    },
+    "space": {
+      "metaTitle": "顯化空間",
+      "metaDescription": "你的顯化、顯化板、排練與 66 天足跡。"
+    },
+    "today": {
+      "metaTitle": "今天",
+      "metaDescription": "今天的三分鐘排練和小行動。",
+      "heading": "今天",
+      "intro": "今天的三分鐘排練和小行動，都從這裡開始。"
+    },
+    "manifestations": {
+      "metaTitle": "我的顯化",
+      "metaDescription": "你用 WOOP 寫下的願望。",
+      "heading": "我的顯化",
+      "intro": "你用 WOOP 寫下的願望都在這裡。"
+    },
+    "board": {
+      "metaTitle": "顯化板",
+      "metaDescription": "以小行動為主的顯化板。",
+      "heading": "顯化板",
+      "intro": "把每天會重複的小行動放在最大的位置，結果的畫面放小一點。"
+    },
+    "rehearsal": {
+      "metaTitle": "排練",
+      "metaDescription": "三分鐘的引導排練：實現後的樣子、阻礙，以及「如果…就…」。",
+      "heading": "排練",
+      "intro": "三分鐘，依序走過實現後的樣子、阻礙，和你的「如果…就…」。"
+    },
+    "footprints": {
+      "metaTitle": "足跡",
+      "metaDescription": "66 天路上的每日足跡。",
+      "heading": "足跡",
+      "intro": "66 天的路上，每天留一個足跡。沒做到的日子是灰色的，就只是灰色。"
+    },
+    "notFound": {
+      "metaTitle": "找不到這一頁",
+      "metaDescription": "找不到這一頁。",
+      "heading": "找不到這一頁",
+      "intro": "這個連結可能換過位置，或是從來沒有存在過。"
+    }
+  }
+}

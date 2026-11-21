@@ -1,1 +1,53 @@
-/* CSS variable exports land here in P02, alongside the TS token objects. */
+/*
+ * Lab notebook (實驗筆記) design tokens as CSS custom properties.
+ * Mirrors packages/tokens/src/index.ts — a unit test asserts the two agree.
+ *
+ * Plain CSS on purpose: no Tailwind directives here, so the file stays usable
+ * by anything that can read CSS. apps/web maps these onto Tailwind's theme in
+ * app/globals.css.
+ */
+
+:root {
+  --cp-ink: #14213d;
+  --cp-ink-muted: #5a678a;
+  --cp-paper: #ffffff;
+  --cp-paper-2: #eef2fa;
+  --cp-paper-sunken: #f7f9fd;
+  --cp-line: #d8e0f0;
+  --cp-graph-blue: #3a6ff7;
+  --cp-blue-on-white: #2f5bd8;
+  --cp-highlighter: #f7e26b;
+  --cp-coral: #ff7a59;
+
+  --cp-font-sans: Inter, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --cp-weight-body: 400;
+  --cp-weight-heading: 700;
+
+  --cp-text-body: 1.0625rem;
+  --cp-leading-body: 1.75;
+
+  --cp-radius-sm: 0.25rem;
+  --cp-radius-md: 0.5rem;
+  --cp-radius-lg: 0.75rem;
+  --cp-radius-pill: 999px;
+
+  --cp-touch-target: 44px;
+  --cp-grid-size: 24px;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cp-ink: #e8edf8;
+    --cp-ink-muted: #a3b0cc;
+    --cp-paper: #0b1222;
+    --cp-paper-2: #141d33;
+    --cp-paper-sunken: #101829;
+    --cp-line: #263251;
+    --cp-graph-blue: #7fa2ff;
+    --cp-blue-on-white: #7fa2ff;
+    --cp-highlighter: #7a6410;
+    --cp-coral: #ff9478;
+  }
+}
