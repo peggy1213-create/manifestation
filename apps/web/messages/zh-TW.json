@@ -1,0 +1,94 @@
+{
+  "common": {
+    "appName": "顯化",
+    "tagline": "用科學方法練習顯化：WOOP、過程導向的顯化板，和 66 天的足跡。",
+    "home": "回首頁",
+    "signIn": "使用 Google 繼續",
+    "signOut": "登出",
+    "myPath": "我的顯化"
+  },
+  "home": {
+    "heading": "顯化。從今天的一個小行動開始。",
+    "body": "寫下你的願望，想像實現後的樣子，認出擋在前面的阻礙，然後安排一個「如果⋯就⋯」的小行動。",
+    "signIn": "使用 Google 繼續",
+    "guest": "先不登入，寫一個顯化試試"
+  },
+  "login": {
+    "title": "登入",
+    "heading": "登入顯化",
+    "body": "登入之後，你的顯化、顯化板和足跡會留在你的帳號裡，換裝置也還在。",
+    "googleButton": "使用 Google 繼續",
+    "scopeNote": "我們只取得你的名字和 email。",
+    "privacyNote": "你寫的字和放的照片只存在我們自己的 Cloudflare 帳號裡，不會交給任何第三方。",
+    "guestNote": "也可以先不登入，在這台裝置上寫一個顯化。",
+    "guestLink": "先寫一個試試",
+    "alreadySignedIn": "你已經登入了。",
+    "goToApp": "進入我的顯化"
+  },
+  "app": {
+    "title": "我的顯化",
+    "greeting": "{name}，今天好。",
+    "greetingNoName": "今天好。",
+    "signedInAs": "已登入：{email}",
+    "empty": "這裡還沒有顯化。寫下第一個願望，就開始了。",
+    "listHeading": "你的顯化",
+    "writtenOn": "寫於 {date}",
+    "fromGuest": "從訪客模式移過來",
+    "woop": {
+      "wish": "願望",
+      "outcome": "實現後的樣子",
+      "obstacle": "內在阻礙",
+      "plan": "如果⋯就⋯的小行動"
+    },
+    "nextPhase": "顯化板、3 分鐘預演和每天的足跡會陸續加進來。"
+  },
+  "guestMove": {
+    "heading": "要把這台裝置上的顯化移到帳號嗎？",
+    "body": "你在登入前寫了「{wish}」。移過去之後，這台裝置上的草稿就會清掉。",
+    "move": "移到我的帳號",
+    "discard": "不用了，清掉草稿",
+    "moving": "正在移⋯",
+    "moved": "已經移到你的帳號了。",
+    "alreadyInAccount": "你的帳號裡已經有同一個願望，所以沒有重複加入。草稿已經清掉。",
+    "accountNotEmpty": "你的帳號裡已經有一個顯化，就先留著它。這台裝置上的草稿還在。",
+    "discarded": "草稿已經清掉。",
+    "failed": "剛剛沒有移成功，稍後再試一次。"
+  },
+  "authError": {
+    "title": "登入沒有完成",
+    "heading": "這次登入沒有完成",
+    "reason": {
+      "denied": "你在 Google 那一步選擇了不繼續。想試就再按一次，不想也沒關係。",
+      "expired": "這個登入連結放太久了（超過 10 分鐘）。重新開始一次就好。",
+      "token": "我們沒辦法確認 Google 回傳的身分資料，所以沒有讓你登入。重新登入一次通常就正常了。",
+      "origin": "這個請求看起來不是從顯化的頁面送出的，所以我們停下來了。",
+      "unknown": "中間有一步沒有成功。重新登入一次試試。"
+    },
+    "retry": "重新登入",
+    "home": "回首頁"
+  },
+  "care": {
+    "hotline": "如果你現在很不好受，可以打 1925（安心專線），24 小時都有人接。"
+  },
+  "guest": {
+    "title": "訪客模式",
+    "heading": "先寫一個顯化試試",
+    "body": "這個草稿只存在這台裝置的瀏覽器裡，還沒有送到任何地方。登入之後，你可以把它移到帳號。",
+    "wishLabel": "願望",
+    "wishPlaceholder": "例如：每週跑三次",
+    "outcomeLabel": "實現後的樣子",
+    "outcomePlaceholder": "想像一個最好的畫面：實現之後，你會看到什麼、感覺到什麼？",
+    "obstacleLabel": "內在阻礙",
+    "obstaclePlaceholder": "最常擋住你的那件事，通常在你自己身上。例如：下班就想躺著",
+    "planLabel": "如果⋯就⋯的小行動",
+    "planPlaceholder": "如果（阻礙出現），就（做一個很小的動作）。例如：如果下班想躺著，就先換上跑鞋走十分鐘",
+    "obstacleHint": "想像之後接著寫阻礙和小行動：這一步才是讓顯化站得住的地方。",
+    "save": "存到這台裝置",
+    "saved": "已經存在這台裝置上。",
+    "needWish": "先寫下你的願望。",
+    "storageFailed": "這個瀏覽器不讓我們存草稿（可能是無痕模式）。登入之後就能存在帳號裡。",
+    "clear": "清掉草稿",
+    "cleared": "草稿已經清掉。",
+    "signInToMove": "登入並把它移到帳號"
+  }
+}

@@ -21,7 +21,7 @@ There is no third-party analytics, auth SDK, or hosting provider in this stack �
 - Node 20+ (see `.nvmrc`)
 - pnpm (`corepack enable && corepack prepare pnpm@10.28.0 --activate`)
 - A Cloudflare account with Wrangler, for `pnpm preview` / `pnpm deploy`
-- A Google Cloud OAuth client (web), for login (added in P04)
+- A Google Cloud OAuth client (web), for sign-in
 
 ## Setup
 
@@ -29,8 +29,15 @@ There is no third-party analytics, auth SDK, or hosting provider in this stack �
 pnpm install
 ```
 
-Copy `apps/web/.dev.vars.example` to `apps/web/.dev.vars` and fill in the values once the
-Google OAuth client exists (added in P04 — not needed yet for `pnpm dev`).
+Copy `apps/web/.dev.vars.example` to `apps/web/.dev.vars` and fill in the values. That file
+documents every secret and how to generate `COOKIE_KEY`; sign-in needs all three
+(`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `COOKIE_KEY`).
+
+Then create the local database tables:
+
+```bash
+pnpm --filter web exec wrangler d1 migrations apply clearpath --local
+```
 
 ## Commands
 
@@ -50,11 +57,59 @@ pnpm deploy     # builds and deploys apps/web to Cloudflare Workers
 against a real Cloudflare account. Local D1/R2 bindings are simulated automatically; no
 Cloudflare account is needed just to run `pnpm preview`.
 
+## Sign-in (hand-rolled OAuth 2.0 + PKCE)
+
+Google is the only way to sign in on the web. There is no auth library and no Node crypto in
+the stack: `packages/auth` is built on `crypto.getRandomValues` and `crypto.subtle` alone, and
+`apps/web` wires it to D1 through the repo functions in `packages/core`.
+
+| Route                       | What it does                                                                                                                                                                                                                                                                      |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /auth/google`          | Makes a PKCE verifier + S256 challenge, state and nonce, seals verifier/state/nonce/returnTo in a 10-minute AES-GCM cookie, redirects to Google with `prompt=select_account`                                                                                                      |
+| `GET /auth/google/callback` | Compares state in constant time, swaps the code for tokens server-side, verifies the ID token (RS256 against Google's cached JWKS, then `iss`, `aud`, `exp`/`iat` ±60s, `nonce`, `email_verified`), upserts the account by `google_sub`, starts a session, clears the PKCE cookie |
+| `POST /auth/logout`         | Deletes the session row, then the cookie                                                                                                                                                                                                                                          |
+| `POST /api/guest/import`    | Moves the 顯化 written in guest mode into the signed-in account                                                                                                                                                                                                                   |
+| `/login`, `/auth/error`     | zh-TW sign-in page, and one page for denied consent / an expired link / a token that did not verify                                                                                                                                                                               |
+
+Sessions are a 32-byte random token in an `HttpOnly; Secure; SameSite=Lax; Path=/` cookie that
+lasts 30 days and rolls forward on use. D1 stores only `SHA-256(token)`, so the `sessions`
+table cannot be replayed if it leaks. `middleware.ts` keeps `/app/*` behind a session cookie
+and refuses any `POST`/`PUT`/`PATCH`/`DELETE` whose `Origin` (or `Referer`) is not our own.
+
+Guest mode holds one 顯化 in `localStorage` and nothing else: it never reaches the server
+unless the person signs in and says to move it. The merge rules live in
+`packages/core/src/guest.ts` — the account always wins, and moving the same 願望 twice adds
+nothing.
+
+### Secrets
+
+| Name                   | Where                                                               |
+| ---------------------- | ------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`     | `wrangler secret put GOOGLE_CLIENT_ID`                              |
+| `GOOGLE_CLIENT_SECRET` | `wrangler secret put GOOGLE_CLIENT_SECRET`                          |
+| `COOKIE_KEY`           | `wrangler secret put COOKIE_KEY` (32 random bytes, base64url)       |
+| `APP_ORIGIN`           | Optional plain var, only for a Worker behind a host-rewriting proxy |
+
+Locally the same names live in `apps/web/.dev.vars`, which is gitignored. Every origin you sign
+in from needs `<origin>/auth/google/callback` on the OAuth client's authorised redirect URI
+list — `http://localhost:3000` for `pnpm dev`, the port `pnpm preview` prints, the
+`workers.dev` URL, and production.
+
 ### Database bindings
 
 `apps/web/wrangler.jsonc` declares the `DB` (D1) and `BOARD` (R2) bindings with placeholder
-resource IDs. These become real once P03 runs `wrangler d1 create clearpath` and
-`wrangler r2 bucket create clearpath-board` and the IDs are filled in.
+resource IDs. These become real once `wrangler d1 create clearpath` and
+`wrangler r2 bucket create clearpath-board` have run and the IDs are filled in.
+
+Migrations are hand-written SQL in `migrations/`:
+
+```bash
+pnpm --filter web exec wrangler d1 migrations apply clearpath --local
+pnpm --filter web exec wrangler d1 migrations apply clearpath --remote
+```
+
+`packages/core` tests run in the Workers runtime (Miniflare) against a real local D1, migrated
+from that same folder — including a test that user B cannot read user A's data.
 
 After changing `wrangler.jsonc`, regenerate typed env bindings:
 

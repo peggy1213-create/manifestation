@@ -13,7 +13,10 @@
     {
       "binding": "DB",
       "database_name": "clearpath",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      // Hand-written SQL migrations live in the repo root, applied with
+      // `wrangler d1 migrations apply clearpath --local | --remote`.
+      "migrations_dir": "../../migrations"
     }
   ],
   // Created with `wrangler r2 bucket create clearpath-board` in P03.

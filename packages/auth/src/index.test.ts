@@ -1,8 +1,25 @@
 import { describe, expect, it } from 'vitest';
-import { AUTH_PACKAGE_NAME } from './index';
+import * as auth from './index';
 
 describe('@clearpath/auth', () => {
-  it('exposes its package name as a sanity check', () => {
-    expect(AUTH_PACKAGE_NAME).toBe('@clearpath/auth');
+  it('exposes the flow the web app wires together', () => {
+    expect(auth.AUTH_PACKAGE_NAME).toBe('@clearpath/auth');
+    for (const name of [
+      'createPkcePair',
+      'buildGoogleAuthorizationUrl',
+      'exchangeAuthorizationCode',
+      'fetchJwks',
+      'verifyIdToken',
+      'importCookieKey',
+      'startTransaction',
+      'openTransaction',
+      'createSessionToken',
+      'hashSessionToken',
+      'sessionCookie',
+      'isSameOrigin',
+      'safeReturnTo',
+    ] as const) {
+      expect(typeof auth[name], name).toBe('function');
+    }
   });
 });

@@ -1,26 +1,158 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Lab notebook (實驗筆記): ink on paper, a faint graph-paper grid, one
+   highlighter swipe and one coral accent per screen. */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--cp-ink);
+  --color-paper: var(--cp-paper);
+  --color-paper-2: var(--cp-paper-2);
+  --color-graph-blue: var(--cp-graph-blue);
+  --color-blue-text: var(--cp-blue-text);
+  --color-highlighter: var(--cp-highlighter);
+  --color-coral: var(--cp-coral);
+  --color-muted: var(--cp-muted);
+  --color-rule: var(--cp-rule);
+  --font-sans: var(--cp-font-sans);
+  --font-latin: var(--cp-font-latin);
+  --radius-notebook: var(--cp-radius);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cp-paper);
+  color: var(--cp-ink);
+  font-family: var(--cp-font-sans);
+  font-size: var(--cp-text-body);
+  font-weight: 400;
+  line-height: var(--cp-leading-body);
+  background-image: linear-gradient(var(--cp-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cp-grid) 1px, transparent 1px);
+  background-size: var(--cp-grid-size) var(--cp-grid-size);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cp-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* A sheet of notebook paper. */
+.cp-sheet {
+  background-color: var(--cp-paper);
+  border: 1px solid var(--cp-rule);
+  border-radius: var(--cp-radius);
+}
+
+/* The margin line down the left of a page. */
+.cp-margin {
+  border-left: 2px solid color-mix(in srgb, var(--cp-coral) 55%, transparent);
+  padding-left: 1rem;
+}
+
+/* Highlighter swipe behind one phrase. Ink text, always. */
+.cp-highlight {
+  background-image: linear-gradient(transparent 58%, var(--cp-highlighter) 58%);
+  color: var(--cp-highlight-text);
+  padding-inline: 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/*
+ * On paper the swipe can be partial, because the ink above it sits on white.
+ * On a dark page the same ink would disappear, so the highlighter covers the
+ * whole phrase instead.
+ */
+@media (prefers-color-scheme: dark) {
+  .cp-highlight {
+    background-image: none;
+    background-color: var(--cp-highlighter);
+    border-radius: 3px;
+    padding-block: 0.05em;
+  }
+}
+
+.cp-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--cp-muted);
+}
+
+.cp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--cp-tap);
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--cp-rule);
+  border-radius: var(--cp-radius);
+  background-color: var(--cp-paper);
+  color: var(--cp-ink);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cp-button:hover {
+  background-color: var(--cp-paper-2);
+}
+
+.cp-button-primary {
+  background-color: var(--cp-primary-bg);
+  border-color: var(--cp-primary-bg);
+  color: var(--cp-primary-text);
+}
+
+.cp-button-primary:hover {
+  background-color: var(--cp-primary-bg);
+  filter: brightness(0.94);
+}
+
+.cp-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.cp-link {
+  color: var(--cp-blue-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.cp-field {
+  display: block;
+  width: 100%;
+  min-height: var(--cp-tap);
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--cp-rule);
+  border-radius: var(--cp-radius);
+  background-color: var(--cp-paper);
+  color: var(--cp-ink);
+  font: inherit;
+}
+
+.cp-field::placeholder {
+  color: var(--cp-muted);
+}
+
+.cp-muted {
+  color: var(--cp-muted);
 }

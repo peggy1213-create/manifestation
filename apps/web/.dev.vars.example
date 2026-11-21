@@ -1,10 +1,27 @@
-# Copy this file to .dev.vars (gitignored) for local `pnpm preview` runs.
-# In production these are Wrangler secrets (`wrangler secret put <NAME>`), never committed.
-
-# Google OAuth 2.0 web client (added in P04)
+# Copy this file to .dev.vars (gitignored) for local `pnpm dev` and `pnpm preview`.
+# In production every one of these is a Wrangler secret, never committed:
+#
+#   wrangler secret put GOOGLE_CLIENT_ID
+#   wrangler secret put GOOGLE_CLIENT_SECRET
+#   wrangler secret put COOKIE_KEY
+#
+# Google Cloud console → APIs & Services → Credentials → OAuth client ID (Web
+# application). Authorised redirect URIs must list every origin you sign in from,
+# each with the /auth/google/callback path:
+#
+#   http://localhost:3000/auth/google/callback      (pnpm dev)
+#   http://localhost:8788/auth/google/callback      (pnpm preview)
+#   https://<worker>.workers.dev/auth/google/callback
+#   https://clearpath.app/auth/google/callback
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
-# Random key used to encrypt the short-lived PKCE cookie (AES-GCM). Generate with:
-# node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+# 32 random bytes, base64url. Encrypts the short-lived (10 min) PKCE cookie with
+# AES-GCM. Generate one with:
+#   node -e "console.log(Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('base64url'))"
 COOKIE_KEY=
+
+# Optional. The public origin, e.g. https://clearpath.app — set it only when the
+# Worker sits behind something that rewrites the host. Left empty, each request's
+# own origin is used for the redirect URI and the origin check.
+APP_ORIGIN=

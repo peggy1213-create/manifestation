@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": false
+    "composite": false,
+    // D1 and the rest of the Workers runtime; `cloudflare:test` for the D1 tests.
+    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers"]
   },
-  "include": ["src"]
+  "include": ["src", "test", "vitest.config.ts"]
 }

@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": false
+    "composite": false,
+    // Workers runtime globals (fetch, Request, crypto.subtle, Cache, btoa) —
+    // this package runs on Cloudflare Workers, never in Node.
+    "types": ["@cloudflare/workers-types"]
   },
   "include": ["src"]
 }

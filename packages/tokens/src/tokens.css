@@ -1,1 +1,51 @@
-/* CSS variable exports land here in P02, alongside the TS token objects. */
+/*
+ * Lab notebook (實驗筆記) tokens, light and dark. Imported once by
+ * apps/web/app/globals.css; the Expo app will read the TS objects in index.ts.
+ */
+
+:root {
+  --cp-ink: #14213d;
+  --cp-paper: #ffffff;
+  --cp-paper-2: #eef2fa;
+  --cp-graph-blue: #3a6ff7;
+  /* Blue text needs a darker blue to stay AA on white. */
+  --cp-blue-text: #2f5bd8;
+  --cp-highlighter: #f7e26b;
+  --cp-coral: #ff7a59;
+  --cp-muted: #4c5a77;
+  --cp-rule: rgba(20, 33, 61, 0.16);
+  --cp-grid: rgba(20, 33, 61, 0.06);
+  --cp-focus: #2f5bd8;
+  /* Primary action: AA in both modes. */
+  --cp-primary-bg: #2f5bd8;
+  --cp-primary-text: #ffffff;
+  /* Highlighter is always yellow, so its text is always dark ink. */
+  --cp-highlight-text: #14213d;
+
+  --cp-font-sans: var(--font-noto-sans-tc), var(--font-inter), system-ui, sans-serif;
+  --cp-font-latin: var(--font-inter), system-ui, sans-serif;
+
+  --cp-text-body: 1.0625rem; /* 17px */
+  --cp-leading-body: 1.75;
+  --cp-radius: 0.75rem;
+  --cp-tap: 2.75rem; /* 44px touch target */
+  --cp-grid-size: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cp-ink: #e8edf8;
+    --cp-paper: #0b1222;
+    --cp-paper-2: #141d33;
+    --cp-graph-blue: #7fa2ff;
+    --cp-blue-text: #7fa2ff;
+    --cp-highlighter: #f7e26b;
+    --cp-coral: #ff7a59;
+    --cp-muted: #a8b4cc;
+    --cp-rule: rgba(232, 237, 248, 0.2);
+    --cp-grid: rgba(232, 237, 248, 0.07);
+    --cp-focus: #7fa2ff;
+    --cp-primary-bg: #7fa2ff;
+    --cp-primary-text: #0b1222;
+  }
+}
