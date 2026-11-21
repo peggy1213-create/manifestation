@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "clearpath",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Created with `wrangler d1 create clearpath` in P03; replace the placeholder id.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "clearpath",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ],
+  // Created with `wrangler r2 bucket create clearpath-board` in P03.
+  "r2_buckets": [
+    {
+      "binding": "BOARD",
+      "bucket_name": "clearpath-board"
+    }
+  ]
+  // Secrets (GOOGLE_CLIENT_SECRET, COOKIE_KEY) are never declared here.
+  // Set them with `wrangler secret put <NAME>`; for local dev see .dev.vars.example.
+}

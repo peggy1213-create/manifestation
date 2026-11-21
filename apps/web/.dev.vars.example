@@ -1,0 +1,10 @@
+# Copy this file to .dev.vars (gitignored) for local `pnpm preview` runs.
+# In production these are Wrangler secrets (`wrangler secret put <NAME>`), never committed.
+
+# Google OAuth 2.0 web client (added in P04)
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# Random key used to encrypt the short-lived PKCE cookie (AES-GCM). Generate with:
+# node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+COOKIE_KEY=
