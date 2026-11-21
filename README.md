@@ -41,7 +41,7 @@ pnpm dev        # Next.js dev server (apps/web), Node runtime, fast iteration
 pnpm build      # next build, every workspace package
 pnpm lint       # eslint, every workspace package
 pnpm typecheck  # tsc --noEmit, every workspace package
-pnpm test       # vitest, every workspace package
+pnpm test       # vitest, every workspace package (packages/core runs inside workerd)
 pnpm preview    # builds the Cloudflare Worker bundle and runs it locally with wrangler
 pnpm deploy     # builds and deploys apps/web to Cloudflare Workers
 ```
@@ -52,15 +52,76 @@ Cloudflare account is needed just to run `pnpm preview`.
 
 ### Database bindings
 
-`apps/web/wrangler.jsonc` declares the `DB` (D1) and `BOARD` (R2) bindings with placeholder
-resource IDs. These become real once P03 runs `wrangler d1 create clearpath` and
-`wrangler r2 bucket create clearpath-board` and the IDs are filled in.
+`apps/web/wrangler.jsonc` declares the `DB` (D1) and `BOARD` (R2) bindings. Create the resources
+once per Cloudflare account and paste the printed database id over the placeholder:
+
+```bash
+wrangler d1 create clearpath
+```
+
+```bash
+wrangler r2 bucket create clearpath-board
+```
 
 After changing `wrangler.jsonc`, regenerate typed env bindings:
 
 ```bash
 pnpm --filter web cf-typegen
 ```
+
+That writes `apps/web/cloudflare-env.d.ts` (gitignored, thousands of lines of workerd runtime
+types). The small committed `apps/web/worker-env.d.ts` declares the same bindings, so a fresh
+clone typechecks without running it.
+
+## Data model
+
+Tables live in [`migrations/`](./migrations) as plain SQL, applied by
+`wrangler d1 migrations`; [`packages/core/src/db/schema.ts`](./packages/core/src/db/schema.ts) is
+the Drizzle view of the same tables.
+
+| table            | holds                                                              |
+| ---------------- | ------------------------------------------------------------------ |
+| `users`          | one row per account (Google, later Apple), reminder time           |
+| `sessions`       | SHA-256 of each session token, 30-day rolling expiry               |
+| `manifestations` | the WOOP 顯化: wish, outcome, obstacle, if-cue, then-action, steps |
+| `checkins`       | 足跡 — one per 顯化 per day (`did` / `partly` / `not_today`)       |
+| `rehearsals`     | each 3-minute guided rehearsal                                     |
+| `reviews`        | one weekly review per 顯化                                         |
+| `board_items`    | the 顯化板 cards, in the `why` and `process` zones                 |
+
+Ids are uuid v4 strings, instants are unix epoch seconds, calendar days are `'YYYY-MM-DD'` in the
+user's own local day, and JSON array columns (`steps`, `cues_done`) are never null. Everything that
+belongs to a person carries `user_id` and cascades from `users` / `manifestations` on delete.
+
+D1 has no row-level security, so **every** read and write goes through
+[`packages/core/src/repo`](./packages/core/src/repo). Each function there takes a `userId` and
+scopes every query by it; nothing else in the codebase touches D1 or Drizzle, and components never
+query the database directly. `packages/core/src/repo/isolation.test.ts` is the safety net: it
+proves user B cannot read, change, delete or fetch the media of user A.
+
+```bash
+pnpm db:migrate         # wrangler d1 migrations apply clearpath --local
+```
+
+```bash
+pnpm db:migrate:remote  # the same, against the real D1 database
+```
+
+```bash
+pnpm db:seed            # one sample 顯化 (the 10K run) into the local database
+```
+
+The sample 顯化 exists twice, kept in step by a test: as SQL in
+[`seeds/sample-manifestation.sql`](./seeds/sample-manifestation.sql) for `pnpm db:seed`, and as
+TypeScript in `packages/core/src/seed` for tests and for the app.
+
+### Photos
+
+Photos go to the private R2 bucket under `users/{userId}/{manifestationId}/{uuid}.jpg` and are
+never public. `GET /media/[...key]` resolves the session cookie, checks the key sits under that
+user's own prefix, then streams the object: 401 without a session, and 404 both for a key that is
+not yours and for one that is not there, so a key can never reveal that someone else's photo
+exists.
 
 ## CI/CD
 

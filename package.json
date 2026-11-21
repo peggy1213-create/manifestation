@@ -14,6 +14,9 @@
     "e2e": "turbo run e2e --filter=web",
     "preview": "turbo run preview --filter=web",
     "deploy": "turbo run deploy --filter=web",
+    "db:migrate": "pnpm --filter web exec wrangler d1 migrations apply clearpath --local",
+    "db:migrate:remote": "pnpm --filter web exec wrangler d1 migrations apply clearpath --remote",
+    "db:seed": "pnpm --filter web exec wrangler d1 execute clearpath --local --file=../../seeds/sample-manifestation.sql",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

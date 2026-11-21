@@ -8,12 +8,15 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  // Created with `wrangler d1 create clearpath` in P03; replace the placeholder id.
+  // Created with `wrangler d1 create clearpath`; replace the placeholder id with
+  // the one that command prints (the placeholder is enough for --local).
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "clearpath",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      // Migrations live at the repo root, shared with the Vitest workers pool.
+      "migrations_dir": "../../migrations"
     }
   ],
   // Created with `wrangler r2 bucket create clearpath-board` in P03.
