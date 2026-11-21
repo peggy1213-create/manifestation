@@ -15,7 +15,8 @@
   "dependencies": {
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.29"
+    "next": "15.5.29",
+    "@clearpath/tokens": "workspace:*"
   },
   "devDependencies": {
     "typescript": "5.7.3",

@@ -1,26 +1,88 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Tailwind v4 preset: map the Lab notebook `--cp-*` tokens from @clearpath/tokens onto
+ * Tailwind's own theme namespaces, so e.g. `bg-ink`, `text-blue-text`, `text-body`,
+ * `rounded-md` and `p-4` all read from the token values below rather than ad-hoc values.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--cp-color-ink);
+  --color-paper: var(--cp-color-paper);
+  --color-paper-2: var(--cp-color-paper-2);
+  --color-graph-blue: var(--cp-color-graph-blue);
+  --color-blue-text: var(--cp-color-blue-text);
+  --color-highlighter: var(--cp-color-highlighter);
+  --color-coral: var(--cp-color-coral);
+  --color-ink-on-accent: var(--cp-color-ink-on-accent);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /*
+   * The self-hosted next/font faces first (their variables are set on <html> in
+   * app/layout.tsx), then the `--cp-font-sans` token's own family names as the fallback
+   * tail. Inter covers Latin and numerals; Chinese falls through to Noto Sans TC.
+   */
+  --font-sans: var(--font-inter), var(--font-noto-sans-tc), var(--cp-font-sans);
+
+  --text-caption: var(--cp-text-caption-size);
+  --text-caption--line-height: var(--cp-text-caption-leading);
+  --text-body: var(--cp-text-body-size);
+  --text-body--line-height: var(--cp-text-body-leading);
+  --text-heading: var(--cp-text-heading-size);
+  --text-heading--line-height: var(--cp-text-heading-leading);
+  --text-display: var(--cp-text-display-size);
+  --text-display--line-height: var(--cp-text-display-leading);
+
+  /*
+   * The spacing scale's base step, which drives every numeric spacing utility
+   * (`p-1` = 1 step, `gap-6` = 6 steps, …). The named token steps are multiples of it:
+   * xs 1, sm 2, md 3, lg 4, xl 6, 2xl 8, 3xl 12, 4xl 16.
+   *
+   * Don't add named `--spacing-xs` / `--spacing-sm` / … keys here: in Tailwind v4 a named
+   * spacing key shadows the same-named container size, which would silently turn
+   * `max-w-sm` from 24rem into the 0.5rem spacing step.
+   */
+  --spacing: var(--cp-space-xs);
+
+  --radius-sm: var(--cp-radius-sm);
+  --radius-md: var(--cp-radius-md);
+  --radius-lg: var(--cp-radius-lg);
+  --radius-full: var(--cp-radius-full);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cp-color-paper);
+  color: var(--cp-color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--cp-text-body-size);
+  line-height: var(--cp-text-body-leading);
+}
+
+/*
+ * Derived, not new: these utilities tint the ink token with `color-mix` instead of
+ * introducing a colour outside the token set. `@utility` (not a plain class) so Tailwind
+ * variants like `peer-checked:cp-shadow-card` work on them.
+ *
+ * They read `--cp-color-*` rather than Tailwind's `--color-*` aliases on purpose: the
+ * aliases are declared once on `:root`, so they resolve against the root theme and would
+ * stay light-mode inside a nested `data-theme="dark"` subtree. The `--cp-*` tokens are
+ * re-declared per theme, so they resolve against whichever theme the element sits in.
+ */
+@utility cp-shadow-card {
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--cp-color-ink) 7%, transparent),
+    0 1px 1px color-mix(in srgb, var(--cp-color-ink) 10%, transparent);
+}
+
+@utility cp-graph-paper {
+  background-image: linear-gradient(
+      color-mix(in srgb, var(--cp-color-ink) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--cp-color-ink) 7%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 24px 24px;
+  background-color: var(--cp-color-paper);
 }

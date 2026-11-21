@@ -11,7 +11,8 @@ pnpm + Turborepo monorepo, deployed to Cloudflare Workers:
   [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare)
 - `packages/core` — pure TS domain logic (WOOP model, 66-day cycle, streaks), no React
 - `packages/auth` — hand-rolled OAuth 2.0 + PKCE (Web Crypto only, no auth libraries)
-- `packages/tokens` — design tokens shared by web and the future Expo app
+- `packages/tokens` — design tokens shared by web and the future Expo app (colours, type
+  scale, spacing, radius), exported both as TypeScript objects and as CSS variables
 
 Data lives in Cloudflare D1 (SQLite via Drizzle ORM) and Cloudflare R2 (private file storage).
 There is no third-party analytics, auth SDK, or hosting provider in this stack — Cloudflare only.
@@ -49,6 +50,18 @@ pnpm deploy     # builds and deploys apps/web to Cloudflare Workers
 `pnpm preview` and `pnpm deploy` run in `apps/web` and require Wrangler to be authenticated
 against a real Cloudflare account. Local D1/R2 bindings are simulated automatically; no
 Cloudflare account is needed just to run `pnpm preview`.
+
+### Design system
+
+The Lab notebook (實驗筆記) design system lives in `packages/tokens` (values) and
+`apps/web/components/ui` (components). `apps/web/app/globals.css` is the Tailwind v4
+preset: it maps the tokens' `--cp-*` CSS variables onto Tailwind's theme namespaces, so
+`bg-ink`, `text-body` and `rounded-md` all read from the tokens and nothing hard-codes a
+colour. Dark mode follows the system and can be forced with a `data-theme="light"|"dark"`
+attribute on any element.
+
+Run `pnpm dev` and open [`/styleguide`](http://localhost:3000/styleguide) to see every
+component side by side in both themes.
 
 ### Database bindings
 
