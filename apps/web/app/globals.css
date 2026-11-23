@@ -1,26 +1,164 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Lab notebook (實驗筆記). Colour, type and motif values come from @clearpath/tokens;
+ * this file maps them onto Tailwind utilities and the three notebook motifs
+ * (graph-paper grid, highlighter swipe, margin line).
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--cp-ink);
+  --color-ink-muted: var(--cp-ink-muted);
+  --color-paper: var(--cp-paper);
+  --color-paper-2: var(--cp-paper-2);
+  --color-graph: var(--cp-graph-blue);
+  --color-blue-text: var(--cp-blue-text);
+  --color-highlighter: var(--cp-highlighter);
+  --color-coral: var(--cp-coral);
+  --color-rule: var(--cp-rule);
+  --color-day-neutral: var(--cp-neutral);
+  --color-ink-on-accent: var(--cp-ink-on-accent);
+
+  --font-sans: var(--font-inter), 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei',
+    'Hiragino Sans GB', system-ui, sans-serif;
+
+  --radius-notebook: 0.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cp-paper);
+  color: var(--cp-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cp-graph-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Motif 1 — faint graph-paper grid. Decorative only. */
+.cp-grid {
+  background-image: linear-gradient(to right, var(--cp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid-line) 1px, transparent 1px);
+  background-size: 1.5rem 1.5rem;
+  background-position: center top;
+}
+
+/* Motif 2 — highlighter swipe behind one phrase. Ink text on highlighter, always. */
+.cp-mark {
+  color: var(--cp-ink-on-accent);
+  /* A band sized in em, so it covers the glyphs at any line height — ink stays readable
+     on the highlighter in both light and dark mode. */
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(50% - 0.66em),
+    var(--cp-highlighter) calc(50% - 0.66em),
+    var(--cp-highlighter) calc(50% + 0.62em),
+    transparent calc(50% + 0.62em)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding-inline: 0.12em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* The swipe draws itself once, left to right. */
+.cp-mark-swipe {
+  animation: cp-swipe 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 160ms both;
+}
+
+@keyframes cp-swipe {
+  from {
+    background-size: 0 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+/* Motif 3 — notebook margin line down the left edge. */
+.cp-margin-line {
+  position: relative;
+}
+
+.cp-margin-line::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 1px;
+  background-color: var(--cp-margin-line);
+}
+
+/* 66-day path: each day fades in once, in order, like dots being inked in. */
+.cp-day {
+  animation: cp-day-in 300ms ease-out both;
+  animation-delay: calc(var(--cp-day-index) * 14ms);
+}
+
+@keyframes cp-day-in {
+  from {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Today keeps a slow, quiet pulse — the path is live, not a countdown. */
+.cp-day-today {
+  animation:
+    cp-day-in 300ms ease-out calc(var(--cp-day-index) * 14ms) both,
+    cp-today 2600ms ease-in-out 1200ms infinite;
+}
+
+@keyframes cp-today {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 122 89 / 50%);
+  }
+  55% {
+    box-shadow: 0 0 0 0.375rem rgb(255 122 89 / 0%);
+  }
+}
+
+/* No motion when the reader asked for none: every element lands in its final state. */
+@media (prefers-reduced-motion: reduce) {
+  .cp-mark-swipe,
+  .cp-day,
+  .cp-day-today {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

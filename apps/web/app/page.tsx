@@ -1,7 +1,21 @@
-export default function Home() {
+import { BoardPreview } from '@/components/home/board';
+import { Closing } from '@/components/home/closing';
+import { Faq } from '@/components/home/faq';
+import { Hero } from '@/components/home/hero';
+import { LatestResources } from '@/components/home/latest-resources';
+import { Science } from '@/components/home/science';
+import { Steps } from '@/components/home/steps';
+
+export default function HomePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <p className="text-2xl font-medium">顯化。即將開始。</p>
-    </main>
+    <>
+      <Hero />
+      <Steps />
+      <Science />
+      <BoardPreview />
+      <LatestResources />
+      <Faq />
+      <Closing />
+    </>
   );
 }

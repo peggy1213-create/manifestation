@@ -62,6 +62,22 @@ After changing `wrangler.jsonc`, regenerate typed env bindings:
 pnpm --filter web cf-typegen
 ```
 
+## Copy and content
+
+All user-facing copy is 繁體中文 and lives in `apps/web/messages/zh-TW.json`, read through
+[next-intl](https://next-intl.dev) (`apps/web/i18n/request.ts`, zh-TW only for now). Components
+never hard-code a user-facing string; `apps/web/global.d.ts` types the message keys so a missing
+key fails `pnpm typecheck`.
+
+Articles are MDX in `apps/web/content/resources`, with zh-TW frontmatter
+(`title`, `description`, `publishedAt`, `readingMinutes`, `sources`). `apps/web/lib/resources.ts`
+imports them, validates the frontmatter at build time, and sorts them newest first; `/resources`
+lists them and `/resources/[slug]` renders one.
+
+Design tokens (the Lab notebook palette) live in `packages/tokens`: `src/tokens.css` holds the
+`--cp-*` custom properties the web app maps onto Tailwind utilities, and `src/index.ts` mirrors
+them for the future Expo app. A unit test keeps the two in sync.
+
 ## CI/CD
 
 `.github/workflows/ci.yml` installs, lints, typechecks, tests and builds every pull request.

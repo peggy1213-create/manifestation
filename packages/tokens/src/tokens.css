@@ -1,1 +1,63 @@
-/* CSS variable exports land here in P02, alongside the TS token objects. */
+/*
+ * Lab notebook (實驗筆記) design tokens.
+ * Mirrors the TypeScript objects in ./index.ts — keep both in sync (see index.test.ts).
+ * Light mode is the default; dark mode follows the system preference.
+ */
+
+:root {
+  /* Surfaces and ink */
+  --cp-ink: #14213d;
+  --cp-ink-muted: #3d4f78;
+  --cp-paper: #ffffff;
+  --cp-paper-2: #eef2fa;
+
+  /* Blues */
+  --cp-graph-blue: #3a6ff7;
+  --cp-blue-text: #2f5bd8;
+
+  /* Accents */
+  --cp-highlighter: #f7e26b;
+  --cp-coral: #ff7a59;
+  /* Ink on highlighter/coral stays dark in both schemes, for contrast */
+  --cp-ink-on-accent: #14213d;
+
+  /* Notebook motifs */
+  --cp-rule: #d7e0f2;
+  --cp-grid-line: rgb(58 111 247 / 8%);
+  --cp-margin-line: rgb(255 122 89 / 45%);
+
+  /* Kind tracking: a missed day is neutral grey, never red */
+  --cp-neutral: #c7cedb;
+
+  /* Type */
+  --cp-font-sans: var(--cp-font-latin, 'Inter'), var(--cp-font-han, 'Noto Sans TC'), 'PingFang TC',
+    'Microsoft JhengHei', 'Hiragino Sans GB', system-ui, sans-serif;
+  --cp-text-body: 1.0625rem;
+  --cp-leading-body: 1.75;
+
+  /* Space and shape */
+  --cp-radius: 0.75rem;
+  --cp-tap-target: 2.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cp-ink: #e8edf8;
+    --cp-ink-muted: #aebcdb;
+    --cp-paper: #0b1222;
+    --cp-paper-2: #141d33;
+
+    --cp-graph-blue: #7fa2ff;
+    --cp-blue-text: #7fa2ff;
+
+    --cp-highlighter: #f7e26b;
+    --cp-coral: #ff7a59;
+    --cp-ink-on-accent: #14213d;
+
+    --cp-rule: #243457;
+    --cp-grid-line: rgb(127 162 255 / 10%);
+    --cp-margin-line: rgb(255 122 89 / 40%);
+
+    --cp-neutral: #35425f;
+  }
+}
