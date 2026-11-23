@@ -1,0 +1,28 @@
+{
+  "resources": {
+    "title": "資源",
+    "lede": "顯化不靠相信，靠練習。這裡整理的是有研究基礎的方法，以及常被誤讀的地方。每一篇都附上原始文獻，也都接著一個可以今天就做的練習。",
+    "filterLegend": "依主題看",
+    "all": "全部",
+    "articleCount": "{count} 篇",
+    "readingTime": "約 {minutes} 分鐘",
+    "draftBadge": "草稿",
+    "draftNotice": "這是草稿，只在開發與預覽時看得到，還沒有對外發表。",
+    "published": "發表於 {date}",
+    "reviewed": "最後檢閱",
+    "references": "參考文獻",
+    "exerciseCta": "今天就試這個練習",
+    "backToList": "回到資源",
+    "empty": "資源還在準備中，很快就會放上來。",
+    "emptyForTopic": "「{topic}」還沒有文章。換個主題看看。",
+    "feedTitle": "Clear Path 顯化 · 資源",
+    "feedDescription": "有研究基礎的顯化方法、想像練習與習慣筆記。"
+  },
+  "mdx": {
+    "tryToday": "今天就試",
+    "calloutNote": "筆記",
+    "calloutEvidence": "研究怎麼說",
+    "calloutCaution": "常見誤解",
+    "citationAriaLabel": "{author}（{year}），見參考文獻"
+  }
+}

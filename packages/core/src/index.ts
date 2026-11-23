@@ -2,3 +2,5 @@
 // WOOP model, 66-day cycle and streak rules land here starting with P08/P09.
 
 export const CORE_PACKAGE_NAME = '@clearpath/core';
+
+export * from './resources';

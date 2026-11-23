@@ -1,26 +1,117 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Map the Lab notebook tokens onto Tailwind's theme so utilities such as
+ * `bg-paper`, `text-ink-muted` and `border-rule` resolve to the CSS variables
+ * in @clearpath/tokens. `inline` keeps the variables live, so dark mode is a
+ * variable swap rather than a second set of utilities.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--cp-ink);
+  --color-paper: var(--cp-paper);
+  --color-paper-2: var(--cp-paper-2);
+  --color-graph-blue: var(--cp-graph-blue);
+  --color-blue-text: var(--cp-blue-text);
+  --color-highlighter: var(--cp-highlighter);
+  --color-coral: var(--cp-coral);
+  --color-ink-muted: var(--cp-ink-muted);
+  --color-rule: var(--cp-rule);
+  --color-day-neutral: var(--cp-neutral);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--cp-font-sans);
+  --font-latin: var(--cp-font-latin);
+
+  --radius-cp: var(--cp-radius);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cp-paper);
+  color: var(--cp-ink);
+  font-family: var(--cp-font-sans);
+  font-size: var(--cp-text-body);
+  line-height: var(--cp-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Latin text and numbers get Inter, inside zh-TW prose too. */
+.font-latin,
+code,
+time {
+  font-family: var(--cp-font-latin);
+}
+
+/* Visible focus everywhere, never removed. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--cp-graph-blue);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ---- Motifs -------------------------------------------------------------- */
+
+/* A faint graph-paper grid. Decorative, so it never carries meaning. */
+.cp-grid {
+  background-image: linear-gradient(to right, var(--cp-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid) 1px, transparent 1px);
+  background-size: var(--cp-grid-size) var(--cp-grid-size);
+}
+
+/*
+ * The notebook margin line: one rule down the left of an article, with the
+ * body text set to its right. At 375px it tucks in close; from `sm` up it
+ * opens out into a real margin.
+ */
+.cp-margin-line {
+  border-inline-start: 1px solid var(--cp-rule);
+  padding-inline-start: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .cp-margin-line {
+    padding-inline-start: 2.5rem;
+  }
+}
+
+/* A highlighter swipe behind one phrase — ink text on yellow, always. */
+.cp-highlight {
+  display: inline;
+  padding: 0.1em 0.3em;
+  margin-inline: -0.1em;
+  background-color: var(--cp-highlighter);
+  color: #14213d; /* literal ink: the swipe stays yellow in dark mode */
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ---- Article prose ------------------------------------------------------- */
+
+.cp-prose {
+  font-size: var(--cp-text-body);
+  line-height: var(--cp-leading-body);
+}
+
+.cp-prose > :first-child {
+  margin-top: 0;
+}
+
+.cp-prose > :last-child {
+  margin-bottom: 0;
+}
+
+/* Paragraphs inside the asides are tighter than body prose. */
+.cp-callout-body > p:first-child,
+.cp-try-body > p:first-child {
+  margin-top: 0;
+}
+
+.cp-callout-body > p:last-child,
+.cp-try-body > p:last-child {
+  margin-bottom: 0;
+}
+
+.cp-callout-body p,
+.cp-try-body p {
+  margin-block: 0.75rem;
 }
