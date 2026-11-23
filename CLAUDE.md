@@ -45,12 +45,13 @@ A science-based manifestation (顯化) web app for Taiwan, zh-TW first. Users wr
   hash is stored in D1 sessions. 30-day rolling expiry. Origin check on every mutating request.
 - Secrets (GOOGLE_CLIENT_SECRET, COOKIE_KEY) live in Wrangler secrets, never in code.
 
-## Design: Lab notebook (實驗筆記)
-- ink #14213D (dark #E8EDF8), paper #FFFFFF (dark #0B1222), paper-2 #EEF2FA (dark #141D33)
-- graph-blue #3A6FF7 (dark #7FA2FF); blue text on white #2F5BD8
-- highlighter #F7E26B (always with ink text), coral #FF7A59 (one accent per screen, never body text)
+## Design: Warm notebook (暖調筆記)
+- ink #2E2219 (dark #F3E9DC), paper #FBF4EA (dark #17110C), paper-2 #F3E6D3 (dark #221A13)
+- terracotta #D9683C (dark #E8835A): path dots, tiles, marks, large headings only
+- terracotta-strong #B4502A (dark #F09A73): buttons with white text and links (passes AA)
+- honey #F6C85F (highlighter, always with ink text), kraft #C9A27A (dark #6B5440): grid, dividers
 - Noto Sans TC (headings 700, body 400) + Inter for Latin/numbers; body 16–17px, line-height 1.75
-- Motifs: faint graph-paper grid, highlighter swipe behind one phrase, notebook margin line
+- Motifs: faint kraft graph-paper grid, honey highlighter swipe behind one phrase, notebook margin line
 - Light and dark mode; 44px touch targets; visible focus; WCAG AA contrast
 
 ## Conventions
