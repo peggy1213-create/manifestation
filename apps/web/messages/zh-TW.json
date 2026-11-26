@@ -1,0 +1,30 @@
+{
+  "home": {
+    "title": "把願望寫成可以走的路",
+    "lead": "用 WOOP 寫下你的顯化，做一塊以過程為主的顯化板，每天記下一個小行動。66 天，一步一個足跡。",
+    "pathCaption": "一條走了一半的路徑長這樣。",
+    "evidence": "這是練習，不是魔法：每次想像完成的樣子之後，都會接著寫下可能的阻礙，和一句「如果…就…」。"
+  },
+  "pathPage": {
+    "heading": "66 天足跡",
+    "placeholder": "這裡會顯示這個顯化的足跡。目前先用一條範例路徑說明版面。"
+  },
+  "pathMap": {
+    "title": "66 天足跡路徑",
+    "dayLabel": "第 {day} 天",
+    "summary": {
+      "beforeStart": "這條 {total} 天的路徑從 {date} 開始，還沒有第一個記號。",
+      "inProgress": "第 {cycle} 條 {total} 天路徑，今天是第 {day} 天。",
+      "finished": "第 {cycle} 條 {total} 天路徑，{total} 天都走完了。",
+      "recorded": "已經記下 {recorded} 天，其中做到 {did} 天、做到一部分 {partly} 天。",
+      "missed": "有 {missed} 天沒做到。",
+      "noMissed": "還沒有空著的日子。",
+      "remaining": "還有 {remaining} 天。",
+      "streak": "目前連續記下 {streak} 天。",
+      "noStreak": "目前沒有連續記下的天數。",
+      "followThrough": "走過的 {closed} 天裡記下了 {recorded} 天，大約 {percent}%。",
+      "todayOpen": "今天還沒記下。",
+      "todayDone": "今天已經記下了。"
+    }
+  }
+}

@@ -1,1 +1,40 @@
-/* CSS variable exports land here in P02, alongside the TS token objects. */
+/*
+ * Warm notebook (暖調筆記) tokens. Same values as the TS objects in ./index.ts.
+ * Dark mode follows the system, and `data-theme` on <html> overrides it either way.
+ */
+
+:root {
+  --cp-ink: #2e2219;
+  --cp-paper: #fbf4ea;
+  --cp-paper-2: #f3e6d3;
+  --cp-terracotta: #d9683c;
+  --cp-terracotta-strong: #b4502a;
+  --cp-honey: #f6c85f;
+  --cp-kraft: #c9a27a;
+
+  --cp-font-sans: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --cp-font-latin: Inter, system-ui, sans-serif;
+
+  --cp-grid-size: 8px;
+  --cp-touch-target: 44px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --cp-ink: #f3e9dc;
+    --cp-paper: #17110c;
+    --cp-paper-2: #221a13;
+    --cp-terracotta: #e8835a;
+    --cp-terracotta-strong: #f09a73;
+    --cp-kraft: #6b5440;
+  }
+}
+
+:root[data-theme='dark'] {
+  --cp-ink: #f3e9dc;
+  --cp-paper: #17110c;
+  --cp-paper-2: #221a13;
+  --cp-terracotta: #e8835a;
+  --cp-terracotta-strong: #f09a73;
+  --cp-kraft: #6b5440;
+}

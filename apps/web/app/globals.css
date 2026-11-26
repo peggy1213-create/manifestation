@@ -1,26 +1,76 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Warm notebook (暖調筆記). The palette itself lives in @clearpath/tokens. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--cp-ink);
+  --color-paper: var(--cp-paper);
+  --color-paper-2: var(--cp-paper-2);
+  --color-terracotta: var(--cp-terracotta);
+  --color-terracotta-strong: var(--cp-terracotta-strong);
+  --color-honey: var(--cp-honey);
+  --color-kraft: var(--cp-kraft);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-noto-sans-tc), var(--cp-font-sans);
+  --font-latin: var(--font-inter), var(--cp-font-latin);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cp-paper);
+  color: var(--cp-ink);
+  font-family: var(--font-noto-sans-tc), var(--cp-font-sans);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+@media (max-width: 400px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Visible focus everywhere, per the design rules. */
+:focus-visible {
+  outline: 2px solid var(--cp-terracotta-strong);
+  outline-offset: 2px;
+}
+
+/* Day 1 / day 66 on the path map. Latin numerals in Inter, the rest in Noto Sans TC. */
+.cp-path-label {
+  fill: var(--cp-ink);
+  font-family: var(--font-inter), var(--cp-font-latin), var(--cp-font-sans);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  opacity: 0.65;
+}
+
+/*
+ * Today's pulsing ring on the path map. A second, static ring sits underneath it, so today is
+ * still marked when the pulse is switched off.
+ */
+@keyframes cp-today-pulse {
+  0% {
+    transform: scale(0.82);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(1.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.95);
+    opacity: 0;
+  }
+}
+
+.cp-today-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cp-today-pulse 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-today-pulse {
+    display: none;
+  }
 }
