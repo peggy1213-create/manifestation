@@ -1,1 +1,83 @@
-/* CSS variable exports land here in P02, alongside the TS token objects. */
+/*
+ * Warm notebook (暖調筆記) — the shared token layer for apps/web and the future
+ * Expo app. Light is the default; dark follows the system, and `data-theme` on
+ * <html> lets a person override it either way.
+ */
+
+:root {
+  --cp-ink: #2e2219;
+  --cp-paper: #fbf4ea;
+  --cp-paper-2: #f3e6d3;
+  --cp-terracotta: #d9683c;
+  --cp-terracotta-strong: #b4502a;
+  --cp-honey: #f6c85f;
+  --cp-kraft: #c9a27a;
+
+  /*
+   * Ink at lower weight, for secondary text and captions. Both weights clear
+   * WCAG AA (4.5:1) on paper and paper-2, in light and dark: soft is 7.2:1,
+   * faint 5.2:1 on light paper.
+   */
+  --cp-ink-soft: color-mix(in srgb, var(--cp-ink) 78%, transparent);
+  --cp-ink-faint: color-mix(in srgb, var(--cp-ink) 68%, transparent);
+  --cp-grid: color-mix(in srgb, var(--cp-kraft) 34%, transparent);
+  /*
+   * A day with nothing recorded: neutral grey, never a warning. It stays quiet
+   * on purpose, so the 足跡 cells carry their meaning in shape and in their
+   * accessible name as well as in colour.
+   */
+  --cp-blank: color-mix(in srgb, var(--cp-ink) 28%, transparent);
+  --cp-on-terracotta: #ffffff;
+  --cp-on-honey: var(--cp-ink);
+
+  --cp-font-sans: 'Noto Sans TC', 'Inter', system-ui, sans-serif;
+  --cp-font-latin: 'Inter', system-ui, sans-serif;
+
+  --cp-text-body: 1.0625rem; /* 17px */
+  --cp-text-small: 0.9375rem; /* 15px */
+  --cp-text-caption: 0.8125rem; /* 13px */
+  --cp-text-title: 1.5rem;
+  --cp-text-display: 2rem;
+  --cp-leading-body: 1.75;
+
+  --cp-space-1: 0.25rem;
+  --cp-space-2: 0.5rem;
+  --cp-space-3: 0.75rem;
+  --cp-space-4: 1rem;
+  --cp-space-5: 1.5rem;
+  --cp-space-6: 2rem;
+  --cp-space-7: 3rem;
+
+  --cp-radius-sm: 0.375rem;
+  --cp-radius: 0.625rem;
+  --cp-radius-lg: 1rem;
+
+  /* 44px minimum touch target. */
+  --cp-tap: 2.75rem;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --cp-ink: #f3e9dc;
+  --cp-paper: #17110c;
+  --cp-paper-2: #221a13;
+  --cp-terracotta: #e8835a;
+  --cp-terracotta-strong: #f09a73;
+  --cp-kraft: #6b5440;
+  --cp-on-terracotta: #17110c;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --cp-ink: #f3e9dc;
+    --cp-paper: #17110c;
+    --cp-paper-2: #221a13;
+    --cp-terracotta: #e8835a;
+    --cp-terracotta-strong: #f09a73;
+    --cp-kraft: #6b5440;
+    --cp-on-terracotta: #17110c;
+    color-scheme: dark;
+  }
+}

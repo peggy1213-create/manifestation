@@ -29,8 +29,15 @@ There is no third-party analytics, auth SDK, or hosting provider in this stack �
 pnpm install
 ```
 
-Copy `apps/web/.dev.vars.example` to `apps/web/.dev.vars` and fill in the values once the
-Google OAuth client exists (added in P04 — not needed yet for `pnpm dev`).
+Copy `apps/web/.dev.vars.example` to `apps/web/.dev.vars`. The Google values can stay empty
+until the sign-in flow exists (P04), but set `DEV_SEED_TOKEN` to any string: it opens the
+development-only route described under [Signing in before P04](#signing-in-before-p04).
+
+Then create the local D1 and apply the migrations:
+
+```bash
+cd apps/web && wrangler d1 migrations apply clearpath --local
+```
 
 ## Commands
 
@@ -42,6 +49,7 @@ pnpm build      # next build, every workspace package
 pnpm lint       # eslint, every workspace package
 pnpm typecheck  # tsc --noEmit, every workspace package
 pnpm test       # vitest, every workspace package
+pnpm e2e        # Playwright, against the Worker bundle (builds and starts it)
 pnpm preview    # builds the Cloudflare Worker bundle and runs it locally with wrangler
 pnpm deploy     # builds and deploys apps/web to Cloudflare Workers
 ```
@@ -53,14 +61,37 @@ Cloudflare account is needed just to run `pnpm preview`.
 ### Database bindings
 
 `apps/web/wrangler.jsonc` declares the `DB` (D1) and `BOARD` (R2) bindings with placeholder
-resource IDs. These become real once P03 runs `wrangler d1 create clearpath` and
-`wrangler r2 bucket create clearpath-board` and the IDs are filled in.
+resource IDs. These become real once `wrangler d1 create clearpath` and
+`wrangler r2 bucket create clearpath-board` have run and the IDs are filled in. Local
+`pnpm dev`, `pnpm preview` and `pnpm e2e` work against simulated bindings without them.
 
-After changing `wrangler.jsonc`, regenerate typed env bindings:
+Schema changes are hand-written SQL in `migrations/`, applied with:
 
 ```bash
-pnpm --filter web cf-typegen
+cd apps/web && wrangler d1 migrations apply clearpath --local
 ```
+
+```bash
+cd apps/web && wrangler d1 migrations apply clearpath --remote
+```
+
+`packages/core/src/db/schema.ts` mirrors that SQL for Drizzle; the SQL file stays the source
+of truth. The bindings are typed in `apps/web/env.d.ts`, which is committed;
+`pnpm --filter web cf-typegen` writes a generated `cloudflare-env.d.ts` beside it that merges
+into the same interface and is gitignored.
+
+### Signing in before P04
+
+Google sign-in does not exist yet, so `/app/[id]` has a development-only way in. With
+`DEV_SEED_TOKEN` set in `apps/web/.dev.vars`, open:
+
+```
+http://localhost:8787/api/dev/seed?token=<DEV_SEED_TOKEN>
+```
+
+It creates a user and one seeded 顯化, signs in with a session cookie, and redirects to that
+顯化's path. In production the variable is absent — it is never a Wrangler secret — and the
+route answers 404 like any path that does not exist.
 
 ## CI/CD
 

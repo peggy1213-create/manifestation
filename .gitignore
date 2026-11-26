@@ -29,3 +29,5 @@ next-env.d.ts
 .DS_Store
 *.pem
 coverage/
+test-results/
+playwright-report/

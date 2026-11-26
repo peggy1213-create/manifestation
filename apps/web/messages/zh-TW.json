@@ -1,0 +1,103 @@
+{
+  "common": {
+    "appName": "顯化",
+    "loading": "正在開啟…",
+    "cancel": "取消",
+    "remove": "移除",
+    "retry": "再試一次"
+  },
+  "home": {
+    "tagline": "顯化。即將開始。"
+  },
+  "path": {
+    "notFoundTitle": "找不到這個顯化",
+    "notFoundBody": "這個顯化不存在，或不在你的帳號裡。",
+    "signInTitle": "請先登入",
+    "signInBody": "顯化只存在你自己的帳號裡，登入後才看得到。",
+    "dayOf": "第 {day} 天 ／ 共 {total} 天",
+    "beforeStart": "這個顯化從 {date} 開始。",
+    "afterEnd": "這一輪 {total} 天已經走完了。足跡都留在這裡。",
+    "wishLabel": "我的願望",
+    "outcomeLabel": "實現後的樣子",
+    "obstacleLabel": "會遇到的阻礙",
+    "planLabel": "我的如果－我就計畫",
+    "planSentence": "如果{planIf}，我就{planThen}。"
+  },
+  "checkin": {
+    "title": "記下今天",
+    "todayIs": "今天是 {date}",
+    "statusQuestion": "今天的小行動，走到哪裡了？",
+    "status": {
+      "done": "做到了",
+      "partial": "部分",
+      "missed": "今天沒做到"
+    },
+    "statusHint": "勾選今日行動會自動選好，也可以自己改。",
+    "cuesTitle": "今日行動",
+    "cuesHint": "最多三個，從你的小行動來。",
+    "cuesEmpty": "這個顯化還沒有小行動。先選一個今天的狀態就好。",
+    "noteLabel": "今天的一句話",
+    "noteOptional": "選填",
+    "notePlaceholder": "想記下什麼都可以",
+    "noteCounter": "{count} ／ {max}",
+    "photoLabel": "加一張照片",
+    "photoHint": "照片只留在你自己的帳號裡，不會外流。",
+    "photoChoose": "選一張照片",
+    "photoReplace": "換一張",
+    "photoRemove": "移除照片",
+    "photoResizing": "正在縮小照片…",
+    "photoTooBig": "這張照片讀不進來，換一張試試。",
+    "photoAlt": "今天記下的照片",
+    "save": "記下今天",
+    "saveAgain": "更新今天",
+    "saving": "正在記下…",
+    "savedDone": "記下來了。今天走到了。",
+    "savedPartial": "記下來了。走了一點也是走了。",
+    "savedMissed": "記下來了。明天再來。",
+    "queuedOffline": "現在沒有網路。已經記在這台裝置上，連上網路會自動同步。",
+    "pendingSync": "還有 {count} 天等著同步。",
+    "syncFailed": "暫時沒送出去，已經留在這台裝置上，等一下會再試。",
+    "editingToday": "今天已經記過了，可以直接改。",
+    "support": {
+      "lead": "如果心裡很沉，{name} {number} 全天有人接。",
+      "call": "撥 {number}"
+    },
+    "photoOptional": "選填",
+    "pickFirst": "先選一個今天的狀態，或勾選今日行動。",
+    "photoNotSent": "照片這次沒送出去，今天的紀錄已經存好了。",
+    "noteTooLong": "只留前面 {max} 個字。"
+  },
+  "footprints": {
+    "title": "足跡",
+    "legendDone": "做到了",
+    "legendPartial": "部分",
+    "legendBlank": "沒有紀錄",
+    "legendToday": "今天",
+    "cellDone": "第 {day} 天，{date}，做到了",
+    "cellPartial": "第 {day} 天，{date}，部分",
+    "cellMissed": "第 {day} 天，{date}，今天沒做到",
+    "cellBlank": "第 {day} 天，{date}，沒有紀錄",
+    "cellFuture": "第 {day} 天，{date}，還沒到",
+    "hasNote": "有一句話",
+    "hasPhoto": "有照片",
+    "isToday": "今天"
+  },
+  "stats": {
+    "title": "這一輪的足跡",
+    "daysActed": "有做到的天數",
+    "daysActedValue": "{days} 天",
+    "streak": "最近連續",
+    "streakValue": "{days} 天",
+    "streakHint": "中間空一天不會中斷。",
+    "followThrough": "有做到的比例",
+    "followThroughEmpty": "還沒有紀錄",
+    "followThroughHint": "今天還沒記下，就先不算進去。",
+    "rehearsals": "預演次數",
+    "rehearsalsValue": "{count} 次",
+    "elapsed": "已經走了 {days} 天，共 {total} 天"
+  },
+  "errors": {
+    "saveFailed": "沒有存成功，等一下再試一次。",
+    "badRequest": "這筆紀錄讀不懂，重新填一次試試。"
+  }
+}
