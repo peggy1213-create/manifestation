@@ -5,6 +5,8 @@
  * stored in D1, so the database alone cannot be replayed as a login.
  */
 
+import { randomBase64Url, sha256, toHex, utf8 } from './base64';
+
 export const SESSION_COOKIE = 'cp_session';
 
 /** 30-day rolling expiry: mutating requests push it out again. */
@@ -15,21 +17,14 @@ export const SESSION_RENEW_AFTER_MS = 24 * 60 * 60 * 1000;
 
 const TOKEN_BYTES = 32;
 
-function base64url(bytes: Uint8Array): string {
-  let binary = '';
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/gu, '-').replace(/\//gu, '_').replace(/=+$/u, '');
-}
-
 /** A fresh opaque session token. Never stored; only its hash is. */
 export function newSessionToken(): string {
-  return base64url(crypto.getRandomValues(new Uint8Array(TOKEN_BYTES)));
+  return randomBase64Url(TOKEN_BYTES);
 }
 
 /** SHA-256 of the token, lowercase hex. The only form that reaches D1. */
 export async function hashSessionToken(token: string): Promise<string> {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token));
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  return toHex(await sha256(utf8(token)));
 }
 
 export interface SessionCookieOptions {

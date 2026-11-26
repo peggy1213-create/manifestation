@@ -21,7 +21,8 @@ There is no third-party analytics, auth SDK, or hosting provider in this stack �
 - Node 20+ (see `.nvmrc`)
 - pnpm (`corepack enable && corepack prepare pnpm@10.28.0 --activate`)
 - A Cloudflare account with Wrangler, for `pnpm preview` / `pnpm deploy`
-- A Google Cloud OAuth client (web), for login (added in P04)
+- A Google Cloud OAuth client (web), for sign-in (only for a real sign-in; `pnpm e2e` does
+  not need one)
 
 ## Setup
 
@@ -29,9 +30,9 @@ There is no third-party analytics, auth SDK, or hosting provider in this stack �
 pnpm install
 ```
 
-Copy `apps/web/.dev.vars.example` to `apps/web/.dev.vars`. The Google values can stay empty
-until the sign-in flow exists (P04), but set `DEV_SEED_TOKEN` to any string: it opens the
-development-only route described under [Signing in before P04](#signing-in-before-p04).
+Copy `apps/web/.dev.vars.example` to `apps/web/.dev.vars`. Its placeholders are enough to run
+and test everything locally; signing in with a real Google account needs your own client, as
+described under [Signing in](#signing-in).
 
 Then create the local D1 and apply the migrations:
 
@@ -80,23 +81,47 @@ of truth. The bindings are typed in `apps/web/env.d.ts`, which is committed;
 `pnpm --filter web cf-typegen` writes a generated `cloudflare-env.d.ts` beside it that merges
 into the same interface and is gitignored.
 
-### Signing in before P04
+### Signing in
 
-Google sign-in does not exist yet, so `/app/[id]` has a development-only way in. With
-`DEV_SEED_TOKEN` set in `apps/web/.dev.vars`, open:
+Google is the only sign-in on the web. The flow is hand-rolled against the protocol in
+`packages/auth` — OpenID Connect authorization code with PKCE (S256), `state` and `nonce`,
+Web Crypto only, no auth library:
+
+1. `/api/auth/google/start` mints a code verifier, state and nonce, seals them into a
+   ten-minute AES-GCM cookie and redirects to Google.
+2. `/api/auth/google/callback` opens that cookie, checks the state, exchanges the code with
+   the verifier, and verifies the ID token: RS256 against Google's cached JWKS, issuer,
+   audience, expiry, the nonce from this attempt, and a verified email.
+3. The session token is 32 random bytes in an HttpOnly, Secure, SameSite=Lax cookie. D1
+   stores only its SHA-256 hash, on a 30-day rolling expiry.
+
+To sign in for real, create an OAuth 2.0 web client at `console.cloud.google.com` with the
+redirect URI `<origin>/api/auth/google/callback` (`http://localhost:8787/api/auth/google/callback`
+locally), then put the id and secret in `.dev.vars`. In production they are Wrangler secrets:
+
+```bash
+cd apps/web && wrangler secret put GOOGLE_CLIENT_SECRET
+```
+
+```bash
+cd apps/web && wrangler secret put COOKIE_KEY
+```
+
+`COOKIE_KEY` is 32 random bytes as base64url, which seals the short-lived sign-in cookie:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+```
+
+### The development sign-in
+
+`pnpm e2e` cannot reach Google, so there is a second way in that exists only locally. With
+`DEV_SEED_TOKEN` set in `apps/web/.dev.vars`, opening
 
 ```
 http://localhost:8787/api/dev/seed?token=<DEV_SEED_TOKEN>
 ```
 
-It creates a user and one seeded 顯化, signs in with a session cookie, and redirects to that
-顯化's path. In production the variable is absent — it is never a Wrangler secret — and the
-route answers 404 like any path that does not exist.
-
-## CI/CD
-
-`.github/workflows/ci.yml` installs, lints, typechecks, tests and builds every pull request.
-Pushes to `main` additionally deploy `apps/web` to Cloudflare Workers, using a scoped
-Cloudflare API token stored as the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository
-secrets — not configured yet, so the deploy job will fail until those secrets and a real D1
-database ID are in place.
+creates a user and one seeded 顯化, signs in, and redirects to that 顯化's path. In production
+the variable is absent — it is never a Wrangler secret — and the route answers 404 like any
+path that does not exist.

@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import {
   CYCLE_DAYS,
@@ -26,11 +27,12 @@ export default async function ManifestationPage({ params }: { params: Promise<{ 
   const t = await getTranslations('path');
   const user = await currentUser();
 
+  const { id } = await params;
+
   if (!user) {
-    return <Notice body={t('signInBody')} title={t('signInTitle')} />;
+    redirect(`/sign-in?returnTo=${encodeURIComponent(`/app/${id}`)}`);
   }
 
-  const { id } = await params;
   const db = await getDatabase();
   const manifestation = await findManifestation(db, user.id, id);
 

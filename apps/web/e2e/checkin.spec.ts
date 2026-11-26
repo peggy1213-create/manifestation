@@ -69,6 +69,9 @@ test('ticking some cues reads as 部分', async ({ page }) => {
   await page.getByRole('button', { name: /記下今天|更新今天/u }).click();
   await expect(todayCell(page, '部分')).toBeVisible();
 
+  // Wait for the save to resolve before reloading: 足跡 moves on the optimistic
+  // record, and reloading mid-flight would race the write rather than test it.
+  await expect(page.getByText('記下來了。走了一點也是走了。')).toBeVisible();
   await page.reload();
   await expect(todayCell(page, '部分')).toBeVisible();
 });

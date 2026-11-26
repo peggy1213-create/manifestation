@@ -7,13 +7,13 @@
     "retry": "再試一次"
   },
   "home": {
-    "tagline": "顯化。即將開始。"
+    "tagline": "顯化。即將開始。",
+    "lead": "用科學方法寫下願望，一天一個小行動，走 66 天。",
+    "start": "開始"
   },
   "path": {
     "notFoundTitle": "找不到這個顯化",
     "notFoundBody": "這個顯化不存在，或不在你的帳號裡。",
-    "signInTitle": "請先登入",
-    "signInBody": "顯化只存在你自己的帳號裡，登入後才看得到。",
     "dayOf": "第 {day} 天 ／ 共 {total} 天",
     "beforeStart": "這個顯化從 {date} 開始。",
     "afterEnd": "這一輪 {total} 天已經走完了。足跡都留在這裡。",
@@ -99,5 +99,25 @@
   "errors": {
     "saveFailed": "沒有存成功，等一下再試一次。",
     "badRequest": "這筆紀錄讀不懂，重新填一次試試。"
+  },
+  "auth": {
+    "signInTitle": "登入顯化",
+    "signInBody": "你的顯化、足跡和照片，只留在你自己的帳號裡。",
+    "signInWithGoogle": "用 Google 繼續",
+    "privacy": "我們只會讀到你的 Email 和名字，不會讀你其他的 Google 資料。",
+    "signOut": "登出",
+    "errors": {
+      "cancelled": "這次沒有完成登入。想再試一次嗎？",
+      "expired": "登入的連結放太久了，再按一次就好。",
+      "refused": "這次登入沒有通過驗證，請再試一次。",
+      "not_configured": "登入還沒設定好，晚點再試試。"
+    }
+  },
+  "list": {
+    "title": "我的顯化",
+    "empty": "還沒有顯化。",
+    "dayOf": "第 {day} 天 ／ 共 {total} 天",
+    "notStarted": "{date} 開始",
+    "finished": "這一輪走完了"
   }
 }

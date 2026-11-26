@@ -1,15 +1,26 @@
-# Copy this file to .dev.vars (gitignored) for local `pnpm preview` runs.
-# In production these are Wrangler secrets (`wrangler secret put <NAME>`), never committed.
+# Copy this file to .dev.vars (gitignored) for local `pnpm dev`, `pnpm preview` and
+# `pnpm e2e`. In production every value here is a Wrangler secret
+# (`wrangler secret put <NAME>`), never a committed one.
 
-# Google OAuth 2.0 web client (added in P04)
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
+# Google OAuth 2.0 web client. Create one at console.cloud.google.com with the
+# redirect URI <origin>/api/auth/google/callback — http://localhost:8787/api/auth/google/callback
+# for a local run. The placeholders below are enough for `pnpm e2e`, which never
+# reaches Google; a real sign-in needs your own client.
+GOOGLE_CLIENT_ID=local-development.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=local-development-client-secret
 
-# Random key used to encrypt the short-lived PKCE cookie (AES-GCM). Generate with:
+# Seals the short-lived sign-in cookie (AES-GCM): 32 random bytes, base64url.
+# The value below is a placeholder that spells out what it is — it is NOT a secret and
+# must never reach production. Generate a real one with:
 # node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
-COOKIE_KEY=
+COOKIE_KEY=Y2xlYXJwYXRoLWxvY2FsLWRldmVsb3BtZW50LWtleSE
+
+# Optional. Pins the origin used to build the OAuth redirect URI, for when the Worker
+# sits behind something that rewrites the request URL. Leave empty to use the request's
+# own origin.
+PUBLIC_ORIGIN=
 
 # Development only: opens /api/dev/seed?token=<this value>, which seeds one 顯化 and
-# signs in so /app/[id] can be used before the Google flow exists. Never set this as a
-# production Wrangler secret — without it the route answers 404.
-DEV_SEED_TOKEN=
+# signs in without Google, so `pnpm e2e` has a way in. Never set this as a production
+# Wrangler secret — without it the route answers 404.
+DEV_SEED_TOKEN=local-dev-token

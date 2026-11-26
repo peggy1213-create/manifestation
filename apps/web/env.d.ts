@@ -15,10 +15,21 @@ declare global {
     /** Private R2 bucket for 顯化板 and 足跡 photos. */
     BOARD: R2Bucket;
 
-    /** Google OAuth 2.0 web client (P04). Wrangler secrets in production. */
+    /**
+     * Google OAuth 2.0 web client. GOOGLE_CLIENT_SECRET and COOKIE_KEY are
+     * Wrangler secrets in production, never values in this repo.
+     */
     GOOGLE_CLIENT_ID?: string;
     GOOGLE_CLIENT_SECRET?: string;
+    /** 32 random bytes, base64url: seals the short-lived sign-in cookie. */
     COOKIE_KEY?: string;
+
+    /**
+     * Optional. Pins the origin used to build the OAuth redirect URI, for when
+     * the Worker sits behind something that rewrites the request URL. It must
+     * match the redirect URI registered in the Google client.
+     */
+    PUBLIC_ORIGIN?: string;
 
     /**
      * Development only. Set in apps/web/.dev.vars to open /api/dev/seed, which
