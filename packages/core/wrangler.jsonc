@@ -1,0 +1,10 @@
+// Test-only Worker config: gives the Vitest workers pool a local D1 binding so the
+// repo functions in src/repo run against real SQLite, not a mock.
+{
+  "name": "clearpath-core-tests",
+  "compatibility_date": "2026-11-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "clearpath-test", "database_id": "core-tests" },
+  ],
+}

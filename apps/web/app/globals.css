@@ -1,26 +1,95 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@clearpath/tokens/tokens.css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Warm notebook (暖調筆記): paper, ink, a kraft grid and one honey highlighter swipe. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--cp-ink);
+  --color-paper: var(--cp-paper);
+  --color-paper-2: var(--cp-paper-2);
+  --color-terracotta: var(--cp-terracotta);
+  --color-terracotta-strong: var(--cp-terracotta-strong);
+  --color-honey: var(--cp-honey);
+  --color-kraft: var(--cp-kraft);
+  --color-on-terracotta: var(--cp-on-terracotta);
+  --color-on-honey: var(--cp-on-honey);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-noto-sans-tc), var(--font-inter), system-ui, sans-serif;
+  --font-latin: var(--font-inter), system-ui, sans-serif;
+
+  --text-body: var(--cp-text-body);
+  --text-small: var(--cp-text-small);
+  --text-label: var(--cp-text-label);
+  --text-heading: var(--cp-text-heading);
+  --text-display: var(--cp-text-display);
+
+  --radius-notebook: var(--cp-radius-lg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cp-paper);
+  color: var(--cp-ink);
+  font-family: var(--font-sans);
+  font-size: var(--cp-text-body);
+  line-height: var(--cp-leading-body);
+  /* Faint kraft graph paper. */
+  background-image: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--cp-kraft) 16%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--cp-kraft) 16%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 24px 24px;
+}
+
+/* Latin text and numbers inside otherwise Chinese copy. */
+.font-latin,
+input[type='number'],
+time {
+  font-family: var(--font-latin);
+}
+
+/* The notebook margin line down the left of a sheet. */
+.cp-sheet {
+  background-color: color-mix(in srgb, var(--cp-paper) 86%, var(--cp-paper-2));
+  border: 1px solid color-mix(in srgb, var(--cp-kraft) 45%, transparent);
+  border-radius: var(--cp-radius-lg);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--cp-kraft) 25%, transparent);
+}
+
+.cp-margin-line {
+  border-left: 2px solid color-mix(in srgb, var(--cp-terracotta) 28%, transparent);
+}
+
+/* One honey highlighter swipe behind a phrase. */
+.cp-highlight {
+  /* The swipe covers the whole phrase, so the ink on it reads in both schemes. */
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--cp-honey) 78%, transparent) 0,
+    color-mix(in srgb, var(--cp-honey) 78%, transparent) 1.2em,
+    transparent 1.2em
+  );
+  color: var(--cp-on-honey);
+  padding: 0.05em 0.15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--cp-terracotta-strong);
+  outline-offset: 2px;
+  border-radius: var(--cp-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,0 +1,153 @@
+{
+  "app": {
+    "name": "顯化",
+    "tagline": "用有證據支持的方法，把願望變成每天的小行動"
+  },
+  "common": {
+    "skipToContent": "跳到主要內容",
+    "optional": "可以不寫"
+  },
+  "builder": {
+    "titleNew": "寫下一個顯化",
+    "titleEdit": "整理這個顯化",
+    "progress": "第 {current} 步，共 {total} 步",
+    "guestNotice": "你還沒登入。這個顯化會先留在這個瀏覽器的私人紀錄裡，之後登入就會接著帶過去。",
+    "counter": "{count}／{max} 字",
+    "wish": {
+      "question": "你最想顯化的是什麼？",
+      "help": "用一句話寫下你的願望。寫得具體一點，之後的每一步都會更好寫。",
+      "label": "我的願望",
+      "placeholder": "例：每週運動三次，讓身體有力氣"
+    },
+    "outcome": {
+      "question": "實現之後，最好的結果是什麼？",
+      "help": "想像那一刻已經發生，寫下你看到、聽到、感覺到什麼。",
+      "label": "最好的結果",
+      "placeholder": "例：我在公園跑完十分鐘，呼吸是順的",
+      "seeLabel": "看到",
+      "seePlaceholder": "例：清晨的公園，樹影在地上",
+      "hearLabel": "聽到",
+      "hearPlaceholder": "例：自己穩定的腳步聲",
+      "feelLabel": "感覺",
+      "feelPlaceholder": "例：身體是輕的，心情是穩的",
+      "afterNote": "下一步我們會看阻礙。只停在美好的畫面，反而會讓人少做一點。"
+    },
+    "obstacle": {
+      "question": "你心裡最可能卡住的地方是什麼？",
+      "help": "寫你自己的那一面：習慣、情緒或念頭，不是外在的條件。",
+      "label": "內在障礙",
+      "placeholder": "例：下班進門就想躺在沙發上，一躺就起不來"
+    },
+    "plan": {
+      "question": "遇到那一刻的時候，你要做什麼？",
+      "help": "寫成「如果…就…」。寫得越具體，真的遇到時越不用想。",
+      "ifLabel": "如果",
+      "ifPlaceholder": "例：我一進門就想躺下",
+      "thenLabel": "就",
+      "thenPlaceholder": "例：先換上跑鞋，走到家門口",
+      "previewLabel": "你的如果…就…",
+      "previewSentence": "如果{ifPart}，就{thenPart}。",
+      "previewEmpty": "兩邊都寫好之後，完整的句子會出現在這裡。"
+    },
+    "process": {
+      "question": "這個顯化需要哪些過程步驟？",
+      "help": "一行一個小行動，加上什麼時候、在哪裡。過程比結果更重要。",
+      "stepLabel": "第 {index} 個小行動",
+      "actionLabel": "小行動",
+      "actionPlaceholder": "例：換上跑鞋",
+      "whenLabel": "什麼時候",
+      "whenPlaceholder": "例：下班進門後",
+      "whereLabel": "在哪裡",
+      "wherePlaceholder": "例：玄關",
+      "add": "再加一個小行動",
+      "remove": "移除第 {index} 個小行動",
+      "pasteHint": "貼上多行文字時，會自動分成幾個小行動。"
+    },
+    "likelihood": {
+      "question": "你覺得實現的可能性有多少？",
+      "help": "1 到 10，憑直覺就好。這不是考試。",
+      "label": "可能性",
+      "scaleMin": "1 · 現在很難",
+      "scaleMax": "10 · 很有機會",
+      "unanswered": "還沒選"
+    },
+    "autosave": {
+      "saving": "正在存…",
+      "savedDraft": "草稿已存",
+      "savedDraftAt": "草稿已存 · {time}",
+      "savedChanges": "修改已存",
+      "savedChangesAt": "修改已存 · {time}",
+      "failed": "暫時存不起來，等一下會再試一次",
+      "retry": "再試一次"
+    },
+    "actions": {
+      "back": "上一步",
+      "next": "下一步",
+      "finish": "開始這個顯化",
+      "saveChanges": "存下修改",
+      "release": "放下這個顯化"
+    }
+  },
+  "likelihood": {
+    "smaller": "4 以下，通常代表這個願望現在有點太大。換成一個小一點、這週就做得到的版本，實現的機會會高很多。",
+    "steady": "這是一個可以開始的位置。把過程步驟再縮小一點，會更穩。",
+    "strong": "你對這個顯化有信心。把第一個小行動排進這週。",
+    "smallerAction": "回去把願望改小一點"
+  },
+  "release": {
+    "action": "放下這個顯化",
+    "title": "放下這個顯化",
+    "body": "放下不是放棄。把現在不適合的願望放下，也是一種前進；它會留在你的足跡裡。",
+    "noteLabel": "想留一句話給自己嗎？",
+    "notePlaceholder": "例：現在不是時候，明年春天再說",
+    "confirm": "放下它",
+    "cancel": "再想一下",
+    "done": "已經放下了。這也算走了一段路。",
+    "releasedOn": "{date} 放下"
+  },
+  "manifestation": {
+    "status": {
+      "draft": "草稿",
+      "active": "進行中",
+      "released": "已放下"
+    },
+    "sections": {
+      "outcome": "最好的結果",
+      "obstacle": "內在障礙",
+      "plan": "如果…就…",
+      "process": "過程步驟",
+      "likelihood": "可能性"
+    },
+    "edit": "繼續整理",
+    "empty": "這裡還沒有東西。",
+    "likelihoodValue": "{value} / 10"
+  },
+  "list": {
+    "title": "我的顯化",
+    "new": "寫下一個顯化",
+    "empty": "還沒有顯化。從一個你這週就想往前走一點的願望開始。",
+    "updatedAt": "{date} 更新"
+  },
+  "errors": {
+    "required": {
+      "wish": "先寫下你的願望，一句話就好",
+      "outcome": "寫下實現之後最好的結果",
+      "obstacle": "寫下你心裡最可能卡住的地方",
+      "planIf": "補上「如果」的那一刻",
+      "planThen": "補上「就」要做的那件小事",
+      "steps": "至少寫一個小行動",
+      "likelihood": "選一個 1 到 10 的數字"
+    },
+    "tooLong": "超過 {limit} 字了，再精簡一點",
+    "tooManySteps": "最多 {limit} 個小行動",
+    "likelihoodRange": "請選 1 到 10 之間的數字",
+    "notFound": "找不到這個顯化。",
+    "released": "這個顯化已經放下了，不能再修改。",
+    "generic": "暫時沒辦法存，等一下再試一次。"
+  },
+  "care": {
+    "title": "如果現在很難撐住",
+    "body": "這個練習是自助工具，不是心理治療。如果你有傷害自己的念頭，請打 安心專線 1925（24 小時、免付費），或找一個你信得過的人說一說。",
+    "line": "安心專線 1925"
+  }
+}

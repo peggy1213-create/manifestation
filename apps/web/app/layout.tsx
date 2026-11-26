@@ -1,33 +1,50 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata, Viewport } from 'next';
+import { Inter, Noto_Sans_TC } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations } from 'next-intl/server';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const notoSansTC = Noto_Sans_TC({
+  variable: '--font-noto-sans-tc',
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: "顯化 Clear Path",
-  description: "科學方法的顯化練習：WOOP、過程導向的顯化板，與 66 天足跡紀錄。",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('app');
+  return { title: `${t('name')} Clear Path`, description: t('tagline') };
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FBF4EA' },
+    { media: '(prefers-color-scheme: dark)', color: '#17110C' },
+  ],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const messages = await getMessages();
+  const t = await getTranslations('common');
+
   return (
     <html lang="zh-TW">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${notoSansTC.variable} ${inter.variable} antialiased`}>
+        <NextIntlClientProvider messages={messages}>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-paper focus:px-4 focus:py-2"
+          >
+            {t('skipToContent')}
+          </a>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -2,3 +2,5 @@
 // no Node crypto). The Google (P04) and Apple (P20) flows land here.
 
 export const AUTH_PACKAGE_NAME = '@clearpath/auth';
+
+export * from './session';

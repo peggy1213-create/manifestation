@@ -12,7 +12,13 @@ out/
 # cloudflare / opennextjs
 .open-next/
 .wrangler/
-apps/web/cloudflare-env.d.ts
+# cloudflare-env.d.ts is committed: `pnpm typecheck` needs the binding types, and
+# `pnpm --filter web cf-typegen` regenerates it after a wrangler.jsonc change.
+
+# playwright
+apps/web/test-results/
+apps/web/playwright-report/
+apps/web/blob-report/
 
 # build
 dist/
